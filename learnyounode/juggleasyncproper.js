@@ -12,7 +12,7 @@ var get = function (url, index, done) {
     var index = urls.findIndex((element, index, array) => element === url)  // linear search
     if (index !== -1) {
       res.pipe(bl((err, data) => {
-        if (err) throw err
+        if (err) done(err)
         results[index] = data.toString()
         num += 1
         if (num === len) {
@@ -26,4 +26,4 @@ var get = function (url, index, done) {
   })
 }
 
-eachAsync(urls, get, console.error)
+eachAsync(urls, get, error => console.error(error))
